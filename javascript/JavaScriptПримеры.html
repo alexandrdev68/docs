@@ -1,0 +1,55 @@
+<script type="text/javascript">
+	//¬ыводит форму по центру экрана
+	function form_show(trigger){
+		if(trigger){
+			var horizontalScroll = $('html').scrollLeft();;
+			var verticalScroll =  $('html').scrollTop();
+			var viewportHeight =  $('html').height()-20;
+			var viewportWidth =  $('html').width();
+			var feedformwidth = $('section.feedback_form').width();
+			var feedformheight = $('section.feedback_form').height();
+			var posX = horizontalScroll+(viewportWidth - feedformwidth) / 2;
+			var posY = verticalScroll+(viewportHeight - feedformheight) / 2;
+			$('section.feedback_form').css('top', posY+'px');
+			$('section.feedback_form').css('left', posX+'px');
+			$('section.feedback_form').fadeIn('medium');
+			$('div.shadow').width(viewportWidth);
+			$('div.shadow').height($(document).height());
+			$('div.shadow').css('top', 0);
+			$('div.shadow').css('left', 0);
+			$('div.shadow').css('position', 'fixed');
+			$('div.shadow').fadeTo('medium', 0.8);
+		}else{
+			$('div.shadow').fadeOut('medium');
+			$('section.feedback_form').fadeOut('medium');
+		}
+	};
+	//формирует строку запроса ajax дл€ формы с именем formName
+	function getFormValuesString(formName){
+		var query = '';
+		var attrval = "";
+		var inputs = $('form[name="'+formName+'"] input');
+		var textareas = $('form[name="'+formName+'"] textarea');
+		var options = $('form[name="'+formName+'"] option');
+		if(inputs.length > 0){
+			for (var i=0; i<=inputs.length-1; i++){
+				attrval = inputs[i].getAttribute('name');
+				query += attrval+'='+$('input[name="'+attrval+'"]').val()+'&';
+			}
+		}
+		if(textareas.length > 0){
+			for (var i=0; i<=textareas.length-1; i++){
+				attrval = textareas[i].getAttribute('name');
+				query += attrval+'='+$('textarea[name="'+attrval+'"]').val()+'&';
+			}
+		}
+		if(options.length > 0){
+			for (var i=0; i<=options.length-1; i++){
+				attrval = options[i].getAttribute('name');
+				query += attrval+'='+$('option[name="'+attrval+'"]').val()+'&';
+			}
+		}
+		query = query.substr(0, query.length-1);
+		return query;
+};
+</script>
