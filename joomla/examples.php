@@ -13,5 +13,7 @@
 	$db->setQuery($query);
 	
 	$results = $db->loadObjectList();
+	//$row = $db->loadAssocList();
+	
 	print_r($results); exit;
 ?>
