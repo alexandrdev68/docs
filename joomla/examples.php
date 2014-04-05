@@ -1,5 +1,5 @@
 <?php
-	//пример запроса к БД в joomla
+	//пример запроса к БД в joomla http://docs.joomla.org/Selecting_data_using_JDatabase
 	$db = JFactory::getDbo();
  
 	// Create a new query object.
