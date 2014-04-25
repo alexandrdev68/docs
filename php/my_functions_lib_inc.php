@@ -191,7 +191,30 @@ $arDeclens = Array(
     echo "</pre>";
 }
 */
-
+?>
+<script>
+//то же для javascript
+	Pbank.declension = function(params){
+		params = params  || {};
+		this.declensions = params.declensions || {};
+		
+		Pbank.declension.prototype.getWord = function(num){
+			var ak;
+			if(num > 20){
+				ak = num % 10;
+			}else{
+				ak = num % 100;
+			}
+			for(var n in this.declensions){
+				if(n == ak){
+					return this.declensions[n];
+				}
+				return this.declensions[0];
+			}
+		}
+	}
+</script>
+<?
 /*-----------------------------------------------------------------------------------------*/
 
 //Функция сортирует массив вида {array(0=>array('price=>1200', 'looop'=>'...',...),...)} по полю 'price' (если $direct = true в возрастающем порядке, иначе по убыванию)
@@ -470,7 +493,7 @@ function cMessage(template){
 </script>
 
 Пример использования функции сообщений:
-
+<script>
 var myMessage = new cMessage({
         header : 'Оплата',
         id : 'gm-transfer-modal-success', //id - шка сообщения (по ней мы его вызываем если сообщение с таким id уже было создано - выводится сообщение в консоль и выполнение прерывается)
@@ -480,15 +503,15 @@ var myMessage = new cMessage({
         container : '#gm-container', //куда пихаем HTML
         type : 'success' //тип сообщения (success, error)
     });
-    
+</script>
 можно задавать только какой-то один параметр, остальные будут заданы по умолчанию:
-
+<script>
 var myMessage = new cMessage({
         id : 'gm-transfer-modal-success',
         header : 'Оплата',
         text : 'Оплата прошла успешно'
     });
-    
+</script>
 вызов сообщения:
 
 myMessage.show(); или так:
@@ -501,6 +524,7 @@ myMessage.show('другое сообщение');
 myMessage.hide()
 
 //Функция центрирования елемента страницы по центру относительно документа
+<script>
 function toCenter(element){
     if(element instanceof Object) {
         var elPosX = ($(document).width() + $(document).scrollLeft()) / 2 - $(element).width() / 2;
@@ -508,9 +532,10 @@ function toCenter(element){
         $(element).css({top : elPosY, left : elPosX});
     };
 };
-
+</script>
 
 //Полезные регулярки
+<script>
 var regPseudonim = {
         wallid : '^[0-9]{14,14}$',
         text128 : '[a-zA-Z0-9а-яА-ЯїЇґҐ,\\\'\"\;\:\.єЄ?!@#\$%\^\&\*\(\)/]{0,128}',
@@ -519,12 +544,13 @@ var regPseudonim = {
 };
 //Замена запятой на точку в js
 number = number.split(',').join('.');
-
+</script>
 
 
 
 //Функция формирует строку xml-вида из переданного ей массива (рекурсивная функция)
 пример: 
+<?
 $arFields = array('param'=>array(
                               'login'=>'GM',
                               'function'=>'GMDebtQuery',
@@ -552,4 +578,4 @@ function parseFields($arInline, $stringXML = ''){
     }
     return $stringXML;
   }
-
+?>
