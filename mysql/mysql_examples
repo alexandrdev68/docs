@@ -1,0 +1,26 @@
+DELIMITER //
+create FUNCTION getUserRent (userID INT) RETURNS INT
+BEGIN
+  DECLARE rentSumm INT;
+  DECLARE result INT;
+  DECLARE t_start INT;
+  DECLARE t_end INT;
+  
+  select time_start, time_end into t_start, t_end  from rent   where klient_id = userID;
+    
+  return t_start;					
+END
+
+DROP PROCEDURE IF EXISTS UserRent;
+DELIMITER //
+create PROCEDURE UserRent (INOUT userID INT)
+BEGIN
+  DECLARE rentSumm INT;
+  DECLARE result INT;
+  DECLARE t_start INT;
+  DECLARE t_end INT;
+  
+  select time_start, time_end into t_start, t_end  from rent   where klient_id = userID;
+    
+  SET userID = 7;					
+END
