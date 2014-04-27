@@ -380,17 +380,23 @@ function queryPTKS(params){
 
 /*очень полезный класс для работы с табличными данными
 в качестве параметров указываются названия переменных и их подпись в заголовке таблицы лучше посмотреть на примере:
+<script>
 example = new tableFromData({
         head : {
             walletId : 'Номер кошелька',
             amount : 'Сумма начисления',
             commission : 'Комиссия',
             closed : 'Дата пополнения',
-            comment : 'Комментарий'
+            comment : 'Комментарий',
+            id : '<input type="checkbox" name="selectReportBike">'
         },
+        content : {
+			id : '<input type="checkbox" data-id="#$#" name="selectReportBike">' //#$# - сюда подставится переменная
+		},
         classes : 'report_table _reportTable',
         counter : true
     });
+</script>
 вызов наполнения свойства table:
 example.fill(data);
 где data = массив объектов вида [ {‘walletId’ : 2342424234, ‘amount’ : 23444, ‘commission’ : 100}, {‘walletId’ : 2342424234, ‘amount’ : 23444, ‘commission’ : 100}]
@@ -405,12 +411,15 @@ counter - если true, будет первая колонка с номера�
 function tableFromData(params){
     params = params || {};
     if(params.head !== undefined) this.head = params.head;
+    if(params.content !== undefined) this.content = params.content;
+    else this.content = {};
     if(params.classes !== undefined) this.classes = params.classes;
     else this.classes = '';
     this.counter = false;
     if(params.counter !== undefined) this.counter = params.counter;
     this.rowNum = 0;
     this.table = '';
+    this.cellTemp = '';
     
     this.fill = function(data){
         data = data || {};
@@ -424,7 +433,15 @@ function tableFromData(params){
                 this.table += '<td>' + this.rowNum + '</td>';
             }
             for(var v in this.head){
-                this.table += '<td>' + (data[d][v] === undefined ? '' : data[d][v]) + '</td>';
+                if(!!this.content[v]){
+                	this.cellTemp = this.content[v].split('#$#');
+                	this.cellTemp = this.cellTemp[0] + 
+                					(data[d][v] === undefined ? '' : data[d][v]) + 
+                					this.cellTemp[1];
+                }else{
+                	this.cellTemp = (data[d][v] === undefined ? '' : data[d][v]);
+                }
+            	this.table += '<td>' + this.cellTemp + '</td>';
             }
             this.table += '</tr>';
         }
