@@ -677,3 +677,125 @@ function serverRequest(params){
 
 };
 </script>
+
+<?
+/**
+	 * Добавляет в заданную таблицу запись с указанными ячейками
+	 * Пример: DBase::setRecord(array('table'=>'gm_log_operation', 'fields'=>array(
+     *          													'dt_created'=>date('Y-m-d h:i:s', time()),
+     *          													'operation'=>'login ',
+     *         													'status'=>$err_no,
+     *          													'input_data'=>'login: '.$ldap_login,
+     *          													'response_str'=>$this->db->add_slash($err_text)
+     *          												)));;
+	 * @var static public function
+	 */
+	static public function setRecord($arParams, $filtr = true){
+		if(isset($arParams['table']) && count($arParams['fields']) > 0){
+			$sql_p1 = 'INSERT INTO `'.$arParams['table'].'` (';
+		//формирование sql запроса
+			$sql_p2 = ") VALUES (";
+			$count = count($arParams['fields']);
+			$i = 1;
+			foreach($arParams['fields'] as $index=>$field){
+					$sql_p1 .= $index;
+					$sql_p2 .= (gettype($field) == 'integer' ? "" : "'").($filtr === true ? self::dataFilter($field) : $field).(gettype($field) == 'integer' ? "" : "'");
+					if($i < $count){
+						$sql_p2 .=', ';
+						$sql_p1 .=', '; 
+					}
+					else $sql_p2 .= ')';
+						
+				$i++;
+			}
+			
+			$res = true;
+			try{
+				$count = self::$PDOConnection->exec($sql_p1.$sql_p2);
+				if($count == 0) $error = self::$PDOConnection->errorCode();
+				else $error = 0;
+			}catch(Exception $e){
+				$res = false;
+				$mess = $e->getMessage();
+			}
+			
+			return ($res === true && $error === 0) ? array('status'=>true) : array('status'=>false, 'message'=>'mySQL error#'.$error, 'sql'=>$sql_p1.$sql_p2, 'error'=>$error);
+		};
+	}
+    
+/**
+	 * Изменяет ячейки в таблице в строке по искомому ключу
+	 * Пример: 
+	 * @var static public function
+	 */
+	static public function updateRecord($arParams, $filtr = true){
+		if(isset($arParams['table']) && count($arParams['fields']) > 0 && isset($arParams['where'])){
+			$sql_p1 = 'UPDATE `'.$arParams['table'].'` SET ';
+		//формирование sql запроса
+			$sql_p2 = " WHERE ";
+			$count = count($arParams['fields']);
+			$i = 1;
+			foreach($arParams['fields'] as $index=>$field){
+					$sql_p1 .= '`'.$index.'`=';
+					$sql_p1 .= (gettype($field) == 'integer' ? "" : "'").($filtr === true ? self::dataFilter($field) : $field).(gettype($field) == 'integer' ? "" : "'");
+					if($i < $count){
+						$sql_p1 .=', '; 
+					}
+					else $sql_p2 .= $arParams['where'];
+						
+				$i++;
+			}
+			//echo $sql_p1.$sql_p2; exit;
+			$res = true;
+			try{
+				$count = self::$PDOConnection->exec($sql_p1.$sql_p2);
+				if($count == 0) $error = self::$PDOConnection->errorCode();
+				else $error = 0;
+			}catch(Exception $e){
+				$res = false;
+				$mess = $e->getMessage();
+			}
+			
+			return ($res === true && $error === 0) ? array('status'=>true) : array('status'=>false, 'message'=>'mySQL error#'.$error, 'sql'=>$sql_p1.$sql_p2, 'error'=>$error);
+		};
+	}
+	
+	
+	
+	
+	
+	
+	
+	static public function get_data($arParam = array('table'=>'', 'fields'=>'', 'where'=>'', 'limit'=>'10', 'sort'=>'ASC')){
+		$arData = array();
+		$query = 'SELECT '.(@$arParam['fields'] == '' || !isset($arParam['fields']) ? '*' : $arParam['fields']).' FROM '
+							.$arParam['table'].(isset($arParam['where']) ? ' WHERE '.$arParam['where'] : '')
+							.(isset($arParam['limit']) ? ' LIMIT '.$arParam['limit'] : '')
+							.@$arParam['sort'];
+		try{
+			if(!is_object(self::$PDOConnection)) throw new PDOException('don\'t connect to database');
+			$arRes = self::$PDOConnection->query($query, 2);
+			if(count($arRes) < 1 || $arRes == '') return array('status'=>0, 'data'=>array(), 'message'=>'query: '.$query.' OK.');
+			foreach($arRes as $row) {
+			  $arData[] = $row;
+			}
+		}catch(PDOException $e){
+			return array('status'=>101, 'data'=>false, 'message'=>'query: '.$query.' return error: '.$e->getMessage());
+		}
+		
+		return array('status'=>0, 'data'=>$arData, 'message'=>'query: '.$query.' OK.');
+    }
+    
+    static protected function getData($sql){
+    	$arResult = array();
+    	try{
+			foreach(self::$PDOConnection->query($sql, 2) as $row) {
+		        $arResult[] = $row;
+		    }
+		    return $arResult;
+		}catch(PDOException $e){
+			self::addMess('mysql request error: '.$e->getMessage());
+			return false;
+		}
+    }
+?>
