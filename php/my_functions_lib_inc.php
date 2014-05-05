@@ -331,52 +331,6 @@ numberFormat : function(number){
     }
 </script>
 
-//недоделанный класс для обращения к ПТКС из яваскрипт
-<script>
-function queryPTKS(params){
-    params = params || {};
-    this.type = params.type || 'POST';
-    this.query = params.query || '';
-    this.params = params.params || {};
-    this.queryString = '';
-    this.init = function(){
-        this.queryString = queryPTKS.getQueryString(this.params);
-    };
-    this.go = function(){
-        var obj = this;
-        $.ajax({
-            url: 'wwxwx',
-            type: obj.type,
-            data: obj.queryString,
-            dataType: 'json',
-            success: function(response) {
-            if(response.status == 'ok' || response.status == 'wallet-info' || response.status == 'approve-group-by-accountant'){
-                ajax_complete_handler();
-                funct(response);
-            }else if(response.status !== undefined && response.status == 'bad'){
-                message.show(response.details !== undefined ? response.details.message : response.message, 3000);
-                setTimeout('ajax_complete_handler', 1000);
-            }else{
-                ajax_complete_handler();
-                error(response);
-            }
-            },
-            error: function(response){
-                
-            }
-        });
-    };
-    
-    queryPTKS.prototype.getQueryString = function(query){
-        query = query || this.params;
-        var qstr = '?';
-        for(var i in query){
-            qstr += i + '=' + query[i] + '&';
-        }
-        return qstr.substr(0, (qstr.length - 1));
-    }
-}
-</script>
 
 /*очень полезный класс для работы с табличными данными
 в качестве параметров указываются названия переменных и их подпись в заголовке таблицы лучше посмотреть на примере:
@@ -676,6 +630,34 @@ function serverRequest(params){
     };
 
 };
+
+
+//функция приведения к нужному типу в яваскрипт
+Pbank.toType = function(type, value){
+		switch(type){
+		case 'string' :
+			return String(value);
+			break;
+		case 'integer' :
+			return parseInt(value);
+			break;
+		case 'float' :
+			return parseFloat(value);
+			break;
+		case 'strToArray':
+			return value.split(',');
+			break;
+		case 'strToArrayFloat':
+			var tmp = value.split(',');
+			for(var num = 0; num < tmp.length; num++){
+				tmp[num] = Pbank.toType('float', tmp[num]);
+			}
+			return tmp;
+			break;
+		default:
+			return value;
+		}
+	};
 </script>
 
 <?
@@ -766,7 +748,7 @@ function serverRequest(params){
 	
 	
 	
-	static public function get_data($arParam = array('table'=>'', 'fields'=>'', 'where'=>'', 'limit'=>'10', 'sort'=>'ASC')){
+static public function get_data($arParam = array('table'=>'', 'fields'=>'', 'where'=>'', 'limit'=>'10', 'sort'=>'ASC')){
 		$arData = array();
 		$query = 'SELECT '.(@$arParam['fields'] == '' || !isset($arParam['fields']) ? '*' : $arParam['fields']).' FROM '
 							.$arParam['table'].(isset($arParam['where']) ? ' WHERE '.$arParam['where'] : '')
