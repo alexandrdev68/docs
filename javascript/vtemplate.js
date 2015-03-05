@@ -33,13 +33,20 @@ function VTemplate(params){
 		
 	};
 	
-	VTemplate.prototype.render = function(data){
+	VTemplate.prototype.render = function(data, element){
+		element = element || null;
 		var self = this;
 		if(!!!data){
 			console.log('data is not defined in template render function. template name: ' + self.tmpName);
 			return false;
 		}
-		var tempElements = document.querySelectorAll('[data-vtemplate_' + self.tmpName + ']');
+		if(element !== null){
+			if(element.length === undefined)
+				element = [element];
+			var tempElements = element;
+		}else{
+			var tempElements = document.querySelectorAll('[data-vtemplate_' + self.tmpName + ']');
+		}
 		var tmpSplit = [];
 		var dataValue = '';
 		var index = 'vtemplate_' + self.tmpName;
