@@ -47,3 +47,50 @@ var MyDate = {
 			return Math.floor(difference / (1000 * 60 * 60 * 24));
 		}
 }
+
+
+var inArray = function(arraySource, find){
+	if(typeof(arraySource) != 'object') return false;
+	if(typeof(find) == 'object'){
+		for(var num = 0; num < arraySource.length; num++){
+			for(var fnum = 0; fnum < find.length; fnum++){
+				if(arraySource[num] === find[fnum]) return num;
+			}
+		}
+		return -1;
+	}else if(typeof(find) == 'string' || typeof(find) == 'number'){
+		for(var num = 0; num < arraySource.length; num++){
+			if(arraySource[num] === find) return num;
+		}
+		return -1;
+	}else return false;
+}
+
+
+
+
+var toType = function(type, value){
+		switch(type){
+		case 'string' :
+			return String(value);
+			break;
+		case 'integer' :
+			return parseInt(value);
+			break;
+		case 'float' :
+			return parseFloat(value);
+			break;
+		case 'strToArray':
+			return value.split(',');
+			break;
+		case 'strToArrayFloat':
+			var tmp = value.split(',');
+			for(var num = 0; num < tmp.length; num++){
+				tmp[num] = toType('float', tmp[num]);
+			}
+			return tmp;
+			break;
+		default:
+			return value;
+		}
+	};
