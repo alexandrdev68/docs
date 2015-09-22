@@ -2,3 +2,8 @@
 
 	django-admin.py startproject mysite_name
 	
+Для создания шаблона для старницы:
+-создаем папку templates в папке mysite_name, создаем папку с именем нашего приложения и в ней создаем файл с именем урл или index.html;
+-меняем в файле settings.py параметр 
+
+	'DIRS': [os.path.join(BASE_DIR, 'templates')], - для случая, когда все шаблоны
