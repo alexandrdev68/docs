@@ -7,3 +7,41 @@
 -меняем в файле settings.py параметр 
 
 	'DIRS': [os.path.join(BASE_DIR, 'templates')], - для случая, когда все шаблоны
+	
+
+Использование вебсокетов с помощью python omnibusd:
+
+ - установка: 
+ 	pip install django-omnibus
+ 	
+ 	Добавляем в настройки Django:
+ 	INSTALLED_APPS = (
+	    # other apps
+	    'omnibus',
+	)
+	контекстный процессор:
+	TEMPLATE_CONTEXT_PROCESSORS = (
+	    # other context processors
+	    'omnibus.context_processors.omnibus',
+	)
+	
+	Запускаем сервер omnibus:
+	python manage.py omnibusd
+	
+	Для отправки сообщения в специализированный канал можно использовать высокоуровневое АПИ:
+	from omnibus.api import publish
+
+	def send_hello_world():
+	    publish(
+	        'mychannel',  # the name of the channel
+	        'hello',  # the `type` of the message/event, clients use this name
+	                  # to register event handlers
+	        {'text': 'Hello world'},  # payload of the event, needs to be
+	                                  # a dict which is JSON dumpable.
+	        sender='server'  # sender id of the event, can be None.
+	    )
+	
+	send_hello_world()
+	
+	Вышеизложенный код отправит (возможно :-)) сообщение с типом 'hello' в канал 'mychannel'. Payload доставит его ко всем соединениям,
+	подписанным на канал. 

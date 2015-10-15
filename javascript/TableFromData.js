@@ -17,6 +17,7 @@
 	});
 	
 	#$# - inserting current variable
+	#%# - inserting current rownumber
 	#anyvariable# - inserting any variable set in data
 	
 	discovery_payments.fill(data);
@@ -58,6 +59,10 @@ function tableFromData(params){
 	                			this.cellTemp = this.cellTemp[0] + 
 	                					(data[d][v] === undefined ? '' : data[d][v]) + 
 	                					this.cellTemp[2];
+	                		}else if(this.cellTemp[1] == '%'){
+	                			this.cellTemp = this.cellTemp[0] + 
+            					this.rowNum + 
+            					this.cellTemp[2];
 	                		}else{
 	                			this.cellTemp = this.cellTemp[0] + 
             					(data[d][this.cellTemp[1]] === undefined ? '' : data[d][this.cellTemp[1]]) + 
@@ -91,6 +96,10 @@ function tableFromData(params){
             			this.cellTemp = this.cellTemp[0] + 
             					(data[d][v] === undefined ? '' : data[d][v]) + 
             					this.cellTemp[2];
+            		}else if(this.cellTemp[1] == '%'){
+            			this.cellTemp = this.cellTemp[0] + 
+    					this.rowNum + 
+    					this.cellTemp[2];
             		}else{
             			this.cellTemp = this.cellTemp[0] + 
     					(data[d][this.cellTemp[1]] === undefined ? '' : data[d][this.cellTemp[1]]) + 
