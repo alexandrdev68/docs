@@ -1,0 +1,21 @@
+https://github.com/symphonycms/symphony-2#via-git
+
+for install:
+git clone git://github.com/symphonycms/symphony-2.git target-directory
+
+
+(Optional) If you would like to add the bundled optional extensions, run the following commands to checkout the bundle branch which contains the Git submodules references and update the submodules:
+
+git checkout --track origin/bundle
+git submodule update --init --recursive
+
+Remove installer files:
+
+rm -rf install/ workspace/install.sql
+
+will need: 
+in php.ini uncomment line 
+ xsl.security_prefs = 0 
+
+sudo aptitude install php5-xsl
+
