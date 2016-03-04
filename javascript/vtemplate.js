@@ -30,7 +30,9 @@ function VTemplate(params){
 		element.appendChild(document.createTextNode(text));
 	};
 	
+	
 	if (document.addEventListener) {
+		
 		VTemplate.prototype.addEvent = function(elem, type, handler) {
 			elem.addEventListener(type, handler, false)
 		}
@@ -54,9 +56,7 @@ function VTemplate(params){
 	
 	this.init = function(){
 		var self = this;
-		window.onload = function(){
-			self.eventRender()
-		}
+		this.addEvent(window, 'load', function(){self.eventRender.call(self)});
 	}
 	
 	VTemplate.prototype.eventRender = function(element){
@@ -68,12 +68,13 @@ function VTemplate(params){
 			var tempElements = element;
 		}else{
 			var tempElements = document.querySelectorAll('[data-vtemplate_' + self.tmpName + ']');
+			if(tempElements.length == 0)
+				return false;
 		}
 		var tmpSplit = [];
 		var index = 'vtemplate_' + self.tmpName;
 		var target = '';
 		var targetVariable = '';
-		//console.log(tempElements);
 		for(var num = 0; num < tempElements.length; num++){
 			dataValue = tempElements[num].dataset[index];
 			tmpSplit = dataValue.split('=', 2);
@@ -106,6 +107,8 @@ function VTemplate(params){
 			var tempElements = element;
 		}else{
 			var tempElements = document.querySelectorAll('[data-vtemplate_' + self.tmpName + ']');
+			if(tempElements.length == 0)
+				return false;
 		}
 		var tmpSplit = [];
 		var dataValue = '';
