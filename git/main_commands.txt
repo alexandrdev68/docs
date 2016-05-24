@@ -1,0 +1,12 @@
+if remote servername is origin:
+
+git branch <branchname>
+	will create local branch with name <branchname>
+
+git checkout <branchname>
+	will switch to branch <branchname>
+	
+git push origin <branchname>
+	will push current branch to remote server in <branchname> branch
+	
+ 
