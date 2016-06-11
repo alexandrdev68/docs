@@ -1,0 +1,6 @@
+Python 2.7
+
+отримати часову мітку по переданій даті:
+
+	import time
+	time.mktime(time.strptime("12-06-2016 10:00", "%d-%m-%Y %H:%M"))
