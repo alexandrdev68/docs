@@ -1,0 +1,14 @@
+link to mediawiki: 
+http://voa.aws.exigenebit.com/AgentSourceWiki/index.php/Development_environment_migration
+
+http://voa.aws.exigenebit.com/AgentSourceWiki/index.php/Agent_Source_Info#Vagrant
+
+Install vagrant:
+
+ - download and install vagrant package;
+ - download vagrant box;
+ - install vagrant plugin: 
+ 	* sudo vagrant plugin install vagrant-vbguest;
+ - setup vagrant box "package":
+ 	* vagrant box add package.box --name agentsource;
+ - 
