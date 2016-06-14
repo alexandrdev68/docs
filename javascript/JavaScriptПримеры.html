@@ -1,5 +1,5 @@
 <script type="text/javascript">
-	//Выводит форму по центру экрана
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 	function form_show(trigger){
 		if(trigger){
 			var horizontalScroll = $('html').scrollLeft();;
@@ -24,7 +24,7 @@
 			$('section.feedback_form').fadeOut('medium');
 		}
 	};
-	//формирует строку запроса ajax для формы с именем formName
+	//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ ajax пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ formName
 	function getFormValuesString(formName){
 		var query = '';
 		var attrval = "";
@@ -51,5 +51,13 @@
 		}
 		query = query.substr(0, query.length-1);
 		return query;
+		
+		//usefull regulary expressions
+		var regPseudonim = {
+		        wallid : '^[0-9]{14,14}$',
+		        text128 : '[a-zA-Z0-9Р°-СЏРђ-РЇС—Р‡Т‘Тђ,\\\'\"\;\:\.С”Р„?!@#\$%\^\&\*\(\)/]{0,128}',
+		        amount : '^([0-9]{1,})$|^[0-9]{1,}[.,](?:[0-9]{1,2})$',
+		    	mail:'^[a-zA-Z0-9][-._a-zA-Z0-9]+@(?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,6}$'
+		};
 };
 </script>
