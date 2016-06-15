@@ -29,7 +29,10 @@
 		var field_type = $(event.target).data('field_type');
 		var field_value = event.key;
 		
-		if(field_value == 'Backspace') return true;
+		if(field_value == 'Backspace' || field_value == 'Tab' ||
+				event.keyCode == 40 || event.keyCode == 37
+				|| event.keyCode == 39 || event.keyCode == 38
+				|| field_value == 'Delete' || field_value == 'Enter') return true;
 		
 		if(CustomReg.filter(field_value, field_type) === false){
 			event.stopPropagation();
