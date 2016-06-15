@@ -98,7 +98,7 @@ var toType = function(type, value){
 	//обект, помогающий облегчить валидацию полей
 	var CustomReg = {
 			validate : function(string, type){
-				r_obj = new RegExp(CustomReg.reg_strings[type]);
+				var r_obj = new RegExp(CustomReg.reg_strings[type]);
 				return r_obj.test(string);
 			},
 			filter : function(string, type){
@@ -116,7 +116,7 @@ var toType = function(type, value){
 				email : '^[a-zA-Z0-9][-._a-zA-Z0-9]+@(?:[-a-zA-Z0-9]+\.)+[a-zA-Z]{2,6}$',
 				name : '[a-zA-Z]{2,}',
 				cvv : '^[0-9]{3,3}$',
-				phone : '^[\+0-9]{12,13}$',
-				number : '^[0-9]+$'
+				phone : '^[\+]{0,1}[0-9]{12,12}$',
+				number : '^[0-9]{4,4}$'
 			}
 		}
