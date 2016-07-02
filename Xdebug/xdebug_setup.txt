@@ -1,0 +1,33 @@
+to install xdebug on VM with CentOs (https://xdebug.org/docs/install#configure-php)
+
+You compile Xdebug separately from the rest of PHP. Note, however, that you need access to the scripts 'phpize' and 'php-config'. If your system does not have 'phpize' and 'php-config', you will need to compile and install PHP from a source tarball first, as these script are by-products of the PHP compilation and installation processes. (Debian users can install the required tools with apt-get install php5-dev). It is important that the source version matches the installed version as there are slight, but important, differences between PHP versions. Once you have access to 'phpize' and 'php-config', do the following:
+
+	Unpack the tarball: tar -xzf xdebug-2.2.5.tgz. Note that you do not need to unpack the tarball inside the PHP source code tree. Xdebug is compiled separately, all by itself, as stated above.
+	cd xdebug-2.2.5
+	Run phpize: phpize (or /path/to/phpize if phpize is not in your path). Make sure you use the phpize that belongs to the PHP version that you want to use Xdebug with. See this FAQ entry if you're having some issues with finding which phpize to use.
+	./configure --enable-xdebug
+	make
+	make install
+	
+Configure PHP to Use Xdebug
+
+	add the following line to php.ini: zend_extension="/wherever/you/put/it/xdebug.so". For PHP versions earlier than 5.3 and threaded usage of PHP (Apache 2 worker MPM or the ISAPI module), add: zend_extension_ts="/wherever/you/put/it/xdebug.so" instead. Note: In case you compiled PHP yourself and used --enable-debug you would have to use zend_extension_debug=. From PHP 5.3 onwards, you always need to use the zend_extension PHP.ini setting name, and not zend_extension_ts, nor zend_extension_debug. However, your compile options (ZTS/normal build; debug/non-debug) still need to match with what PHP is using.
+	Restart your webserver.
+	Write a PHP page that calls 'phpinfo()' Load it in a browser and look for the info on the Xdebug module. If you see it next to the Zend logo, you have been successful! You can also use 'php -m' if you have a command line version of PHP, it lists all loaded modules. Xdebug should appear twice there (once under 'PHP Modules' and once under 'Zend Modules').
+	
+	Увага!!!, якщо ви будете використовувати xdebug для удаленого (або під virtualbox) використання
+	
+	закоментуйте в налаштуваннях php.ini 
+		extension=xdebug.so
+	повинно залишитись тільки 
+		zend_extension="/wherever/you/put/it/xdebug.so"
+		
+	Приклад мого php.ini для користування з virtualbox:
+		zend_extension="/usr/lib64/php/modules/xdebug.so"
+		xdebug.remote_enable=1
+		xdebug.default_enable=1
+		xdebug.remote_host = 10.0.2.2 (порт з якого робиться запит у VM)
+		xdebug.remote_connect_back = On
+		xdebug.remote_autostart = 0
+		
+	не забудьте відкрити порт 9000 у VM
