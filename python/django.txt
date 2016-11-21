@@ -20,7 +20,7 @@ At settings.py add
 At DATABASES = {...
 	 'NAME': os.path.join(BASE_DIR,'project.db'), instead 'NAME': 'project.db'
 	 
-	 
+And don't forget set permissions to files in project folder.
 	 
 
 Для создания проекта джанго необходимо перейти в директорию, где будет располагаться ваш проект и ввести следующую команду:
