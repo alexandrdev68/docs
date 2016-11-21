@@ -1,4 +1,27 @@
-
+Example httpd.conf virtualserver settings:
+		<VirtualHost *:80>
+		    ServerName jobs.django.local                 
+		    ServerAlias jobs.django.local www.jobs.django.local
+		    WSGIScriptAlias / /home/sasha/Projects/www/djangocms_jobs/djangocms_jobs/wsgi.py
+		    WSGIDaemonProcess jobs.django.local python-path=/home/sasha/Projects/www/djangocms_jobs:/home/sasha/Projects/www/django2_env/lib/python2.7/site-packages
+		    WSGIProcessGroup jobs.django.local
+		    <Directory /home/sasha/Projects/www/djangocms_jobs/>
+		        <Files wsgi.py>
+		            Require all granted
+		        </Files>
+		    </Directory>
+		    ErrorLog "/var/log/apache2/jobs.django.local-error.log"
+		    CustomLog "/var/log/apache2/jobs.django.local-access.log" common
+		</VirtualHost>
+		
+At settings.py add 
+	ALLOWED_HOSTS = ['.django.local'] 
+	
+At DATABASES = {...
+	 'NAME': os.path.join(BASE_DIR,'project.db'), instead 'NAME': 'project.db'
+	 
+	 
+	 
 
 Для создания проекта джанго необходимо перейти в директорию, где будет располагаться ваш проект и ввести следующую команду:
 
@@ -47,3 +70,7 @@
 	
 	Вышеизложенный код отправит (возможно :-)) сообщение с типом 'hello' в канал 'mychannel'. Payload доставит его ко всем соединениям,
 	подписанным на канал. 
+	
+	
+	
+	
