@@ -1,0 +1,28 @@
+/*
+* http://usejsdoc.org/
+*/
+/*
+ *
+ *
+ */
+
+ for start React application you must have installed nodejs and npm
+
+use Create React App (my choice)
+
+  For install:
+    npm install -g create-react-app
+
+  For create new react application:
+    create-react-app my-app
+
+  will create folder "my-app" with certain structure.
+
+  For start server:
+    cd my-app/
+    npm start
+
+  after working under project you must commpile wrote code:
+    npm run build
+
+  will create an optimized build of your app in the build folder.

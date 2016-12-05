@@ -10,3 +10,5 @@ git push origin <branchname>
 	will push current branch to remote server in <branchname> branch
 	
  
+git remote add origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_portal.git
+	will add remote repository
