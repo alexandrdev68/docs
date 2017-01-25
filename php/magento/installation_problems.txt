@@ -1,0 +1,20 @@
+for installation via composer:
+
+create-project --repository-url=https://repo.magento.com/ magento/project-community-edition <project dir>
+
+my problems:
+    - did not installed php7.0-curl (sudo apt-get install php7.0-curl) ;
+    - did not installed php7.0-intl (sudo apt-get install php7.0-intl);
+    - did not installed php7.0-zip (sudo apt-get install php7.0-zip)
+    
+    -set permissions:
+        cd /var/www/html/magento2 && find var vendor pub/static pub/media app/etc -type f -exec chmod u+w {} \; && find var vendor pub/static pub/media app/etc -type d -exec chmod u+w {} \; && chmod u+x bin/magento;
+        (in my case this is not resolve problem. I start sudo chmod 777 <project-dir> -R. But this is not good idea )
+        
+    - on my PC was started php5.6, but magento2 required php7.0, for resolve run next in CLI:
+        sudo apt install php libapache2-mod-php
+        cd /etc/apache2/mods-enabled
+        sudo a2dismod php5
+        sudo a2enmod php7.0
+        
+    
