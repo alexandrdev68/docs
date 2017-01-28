@@ -1,0 +1,26 @@
+For share folder from host OS (main OS on your PC) to guest Ubuntu OS (OS on VM):
+   1. setup Guest Additions (maybe on your ubuntu)
+        i am setup guest additions in my ubuntu guest OS:
+            
+            sudo apt-get install virtualbox-guest-additions-iso
+            
+            sudo apt-get install virtualbox-guest-utils
+            
+            restart virtual machine.
+            
+    2. Share your host OS folder (right click on folder and select "share" in "Properties" menu on Windows).
+    3. Open Shared Folders Settings menu item on your VirtualBox top menu (Devices->Shared Folders->Shared Folders Settings...)
+        and click on "Adds new shared" icon -> select your shared host OS folder in popup.
+        check "Auto-mount" and "Permanent" items. It should automatically be mounted to /media/USER/sf_ShareName or /media/sf_ShareName, depending on your guest OS
+        
+    4. Add your regular Ubuntu user to the vboxsf group.
+
+            usermod -aG vboxsf <youruser>
+    
+        If you want a 'better' link under your user's home directory, you could always create a symbolic link.
+
+            ln -s /media/sf_Ubuntu /home/m/Desktop/vbox_shared
+    
+    You will need to reboot your VM for these changes to take effect
+
+    
