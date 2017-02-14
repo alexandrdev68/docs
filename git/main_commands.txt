@@ -2,6 +2,11 @@ if remote servername is origin:
 
 git branch <branchname>
 	will create local branch with name <branchname>
+    
+git branch -d the_local_branch_name
+    for delete local branch
+git push origin :the_remote_branch_name
+    for delete remote branch
 
 git checkout <branchname>
 	will switch to branch <branchname>
@@ -12,3 +17,6 @@ git push origin <branchname>
  
 git remote add origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_portal.git
 	will add remote repository
+    
+git tag -a v1.4 -m 'my version 1.4'
+    add tag
