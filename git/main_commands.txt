@@ -20,3 +20,5 @@ git remote add origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_portal
     
 git tag -a v1.4 -m 'my version 1.4'
     add tag
+git push origin <tag_name>
+    pushing tag to remote repository

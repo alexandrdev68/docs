@@ -24,3 +24,7 @@ BEGIN
     
   SET userID = 7;					
 END
+
+for virtualbox add privilegies for connect outside:
+
+GRANT ALL PRIVILEGES ON `%`.* TO root@10.0.2.2 IDENTIFIED BY 'secret' WITH GRANT OPTION;
