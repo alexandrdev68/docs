@@ -26,7 +26,7 @@ Configure PHP to Use Xdebug
 		zend_extension="/usr/lib64/php/modules/xdebug.so"
 		xdebug.remote_enable=1
 		xdebug.default_enable=1
-		xdebug.remote_host = 10.0.2.2 (порт з якого робиться запит у VM)
+		xdebug.remote_host = 10.0.2.2 (адреса з якої робиться запит у VM)
 		xdebug.remote_connect_back = On
 		xdebug.remote_autostart = 0
 		

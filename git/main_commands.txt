@@ -22,3 +22,6 @@ git tag -a v1.4 -m 'my version 1.4'
     add tag
 git push origin <tag_name>
     pushing tag to remote repository
+    
+git ls-remote --heads origin
+	shows all remote branches
