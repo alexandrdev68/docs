@@ -21,7 +21,7 @@
 			cvv : '^[0-9]{3,3}$',
 			phone : '^[\+]{0,1}[0-9]{12,12}$',
 			number : '^[0-9]{4,4}$'
-		}
+		}//for password - /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/
 	}
 	
 	$('form._acquring_main_form input').on('keydown', function(event){
