@@ -25,3 +25,6 @@ git push origin <tag_name>
     
 git ls-remote --heads origin
 	shows all remote branches
+    
+git remote set-url origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_portal.git
+    change remote repository url to another
