@@ -120,3 +120,125 @@ var toType = function(type, value){
 				number : '^[0-9]{4,4}$'
 			}
 		}
+    
+    /*Функция возвращает навигационную цепочку
+     входные параметры: curr_page - текущая страница; pages - всего страниц; len - длина вывода цепочки (>=6)
+     возвращает индексный массив, где значениями являются номера страниц и:-
+     "curr" - означает, что страница является текущей;
+     "pred" - кнопка "Предыдущая страница";
+     "next"- кнопка "Следующая страница";
+     "all" - кнопка "Вывести все";
+     "first" - обычно выводится как троеточие вначале цепочки;
+     "last" - обычно выводится как троеточие в конце цепочки.
+
+     индекс "current" - номер текущей страницы
+     */
+    function build_page(curr_page, pages, len) {
+        let index;
+        let val;
+        let result = [];
+        curr_page = parseInt(curr_page);
+        pages = parseInt(pages);
+        len = parseInt(len);
+        //длинна цепочки не может быть меньше 6
+        if (len < 6) return false;
+        if (pages <= len) {
+            index = 0;
+            if (curr_page > 1) {
+                result[index] = 'pred';
+                index++;
+            }
+            for (let c = 1; c <= pages; c++) {
+                if (c == curr_page) {
+                    result[index] = 'curr';
+                    index++;
+                } else {
+                    result[index] = c;
+                    index++;
+                }
+            }
+            if (curr_page < pages) {
+                result[index] = 'next';
+                index++;
+            }
+            index++;
+            result[index] = "all";
+        } else if (pages > len) {
+            index = 0;
+            val = 1;
+            if (curr_page > 1) {
+                result[index] = 'pred';
+                index++;
+            }
+            if (curr_page == val) {
+                result[index] = "curr";
+                index++;
+                val++;
+            }
+            result[index] = val;
+            index++;
+            val++;
+            if (curr_page <= Math.ceil((len - 1) / 2)) {
+                //текущая страница в первой половине видимости
+                for (let c = 1; c <= (len - 2); c++) {
+                    if (curr_page == val) {
+                        result[index] = "curr";
+                        index++;
+                        val++;
+                    }
+                    result[index] = val;
+                    index++;
+                    val++;
+                }
+                result[index] = "last";
+                index++;
+                result[index] = pages;
+                index++;
+                if (curr_page < pages) result[index] = "next";
+                index++;
+                result[index] = "all";
+                result['current'] = curr_page;
+                return result;
+
+            } else {
+                //текущая страница за пределами видимости
+                result[index] = "first";
+                index++;
+                val = pages - (len + 1);
+                if ((curr_page + Math.ceil((len - 1) / 2)) > pages) {
+                    for (let c1 = val; c1 < pages; c1++) {
+                        if (curr_page == val) {
+                            result[index] = "curr";
+                            index++;
+                            val++;
+                        }
+                        result[index] = val;
+                        index++;
+                        val++;
+                        if (curr_page < pages) result[index] = "next"; else result[index] = "curr";
+                    }
+                } else {
+                    val = curr_page - (len - 4) / 2;
+                    for (let c = 1; c <= (len - 4); c++) {
+                        if (curr_page == val) {
+                            result[index] = "curr";
+                            index++;
+                            val++;
+                        }
+                        result[index] = val;
+                        index++;
+                        val++;
+                    }
+                    result[index] = "last";
+                    index++;
+                    result[index] = pages;
+                    index++;
+                    if (curr_page < pages) result[index] = "next";
+                }
+            }
+        }
+        index++;
+        result[index] = 'all';
+        result['current'] = curr_page;
+        return result;
+    }
