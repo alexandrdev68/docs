@@ -1,0 +1,40 @@
+for create Deploy key:
+
+Open Terminal.
+
+Paste the text below, substituting in your GitHub email address.
+
+    ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+
+This creates a new ssh key, using the provided email as a label.
+
+copy generated files to .ssh folder
+
+Add your SSH private key to the ssh-agent. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_rsa in the command with the name of your private key file.
+
+    ssh-add ~/.ssh/id_rsa
+    
+add ssh key to repo's (on github) "Deploy keys" setting
+
+Test your connection:
+Enter the following:
+
+ssh -T git@github.com
+# Attempts to ssh to GitHub
+You may see one of these warnings:
+
+The authenticity of host 'github.com (192.30.252.1)' can't be established.
+RSA key fingerprint is 16:27:ac:a5:76:28:2d:36:63:1b:56:4d:eb:df:a6:48.
+Are you sure you want to continue connecting (yes/no)?
+The authenticity of host 'github.com (192.30.252.1)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no)?
+
+
+Attention: make sure your repo url use git protocl not http, which means use
+
+git@github.com:{user}/{repo}.git
+
+not
+
+https://github.com/{user}/{repo}.git
