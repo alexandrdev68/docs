@@ -72,7 +72,7 @@ class JSExtend {
         number = Number(number);
         number = number.toFixed(2);
         number = number.toString();
-        if (!/(^[0-9]{1,}[\.\,]{0,1}[0-9]{0,}$)/.test(number)) return false;
+        if (!/(^[\-0-9]{1,}[\.\,]{0,1}[0-9]{0,}$)/.test(number)) return false;
         number = number.split(',').join('.');
         let arNum = number.split('.');
         let numLen = arNum[0].length;
