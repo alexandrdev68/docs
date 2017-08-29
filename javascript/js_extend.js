@@ -140,8 +140,8 @@ class JSExtend {
                 if(n == ak){
                     return this.declensions[n];
                 }
-                return this.declensions[0];
             }
+            return this.declensions[0];
         }
     }
 
