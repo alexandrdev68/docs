@@ -31,3 +31,6 @@ git remote set-url origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_po
     
 git checkout #hash <filename>
     will roll out file changes to #hash version
+    
+git clean -fdx
+    (removes everything that's not in git
