@@ -28,3 +28,6 @@ git ls-remote --heads origin
     
 git remote set-url origin https://alexandr_b@bitbucket.org/admin_elpaysys/eps_portal.git
     change remote repository url to another
+    
+git checkout #hash <filename>
+    will roll out file changes to #hash version
