@@ -33,4 +33,4 @@ git checkout #hash <filename>
     will roll out file changes to #hash version
     
 git clean -fdx
-    (removes everything that's not in git
+    removes everything that's not in git
