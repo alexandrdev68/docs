@@ -35,7 +35,9 @@
                 '/api/reports/report3_new',
                 '/api/reports/',
                 '/api/login/',
-                'api/users/sasha'
+                'api/users/sasha',
+                '/accounts/8467611728082727/block',
+                '/accounts/846761172808272/block'
             ];
             
             
@@ -109,6 +111,24 @@
             var template13 = [
                 '{#array_start=documents#}--><tr><td>&nbsp;</td><td>{#reason#}</td><td>{#correspondingAccount#}</td><td>#!type===0 ? amount : 0#}</td><td>{#!type===1 ? amount : 0#}</td></tr><!--{#array_end#}',
                 '{#array_start=cashbooks#}--><tr><td>&nbsp;</td><td>{#reason#}</td><td>{#correspondingAccount#}</td><td>#!type===0 ? amount : 0#}</td><td>{#!type===1 ? amount : 0#}</td></tr><!--{#array_end#}'
+            ];
+
+            var template17 = [
+                'Kondrat',
+                "Кіндрат",
+                "Пилип",
+                "Лєнчик",
+                "Б'янка",
+                "Ірина",
+                "Прїмис",
+                "Ґгриґорій",
+                "Принь",
+                "Лёня",
+                "пролв-лоріорп",
+                "рлкурало укоарушкграшукр",
+                "1",
+                "ieurhfieuhfiuehfiuehtgieirfieurhgiuerjfiehghwsfuihweift9483uo4hg4u5tgh43ogh495hto4u3hgoiwergpewhgfoiuwherp9u42jofh4pf4ouhtf4o8ht84hr4uthro4gh9pwrfowrhefpjrfoi4whgp49hrfow4ughpe9hfrowhgeorfewyhfgo8ewhg",
+                "hkjh*+efeorf"
             ]
             
       
@@ -149,17 +169,27 @@ function parseHTML(markup) {
             var reg_template11 = new RegExp(/^[a-zA-Z0-9_]{3,}$/);
             var reg_template12 = new RegExp(/{#array_start=(.*?)#}(.*?){#array_end#}/g);
             var reg_template13 = new RegExp(/{#array_start=(.*?)#}|{#array_end#}/g);
+            var reg_template14 = new RegExp(/{#!(.*?)#}/g);
+            var reg_template15 = new RegExp(/accounts\/([0-9]{16,16})\/block/g);
+            var reg_template16 = new RegExp(/([0-9]{16,16})/g);
+            var reg_template17 = new RegExp(/^[a-zA-Z0-9а-яА-ЯґҐєЄїЇіІёЁ\ \-']{2,64}$/);
             
             
-            
-            var reg = reg_template12;
-            var matches = template12;
+            var reg = reg_template17;
+            var matches = template17;
+            var match_res = null;
             
             for(var index = 0; index < matches.length; index++){
                 
-                document.write('<p><b>word: </b><i>' + matches[index] + ' </i>' + '<br><b>match: </b><i>' + reg.test(matches[index]) + '<br> <b>matches:</b> ' + matches[index].match(reg) + '</p>');
-                console.log(matches[index].match(reg));
+                match_res = matches[index].match(reg)
+                document.write('<p><b>word: </b><i>' + matches[index] + ' </i>' + '<br><b>match: </b><i>' + reg.test(matches[index]) + '<br> <b>matches:</b> ' + match_res + '</p>');
+                console.log('matches: ', match_res);
+                console.log('type of result: ', typeof match_res);
                 console.log(matches[index].replace(reg, ''))
+                console.log(matches[index].replace(reg, function(match){
+                    var expression = match.replace(/{#!|#}/g, '');
+                    return expression;
+                }));
                 
             
                 
