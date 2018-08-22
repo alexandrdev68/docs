@@ -34,3 +34,6 @@ git checkout #hash <filename>
     
 git clean -fdx
     removes everything that's not in git
+
+git log --oneline --decorate --graph --all
+	for output all info about your work

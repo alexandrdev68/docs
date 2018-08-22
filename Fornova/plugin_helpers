@@ -1,0 +1,123 @@
+---------------------------------
+MEMBER FUNCTIONS OF PluginHelper:
+---------------------------------
+      Initialize self.  See help(type(self)) for accurate signature.
+  
+  convert_str_to_date(self, date_str)
+      Converts string values in YYYY-MM-DD format to python datetime object
+      :param date_str: Date as string in YYYY-MM-DD format
+      :return: Same date as python datetime object
+  
+  find_elements_in_html_page(self, url, xpath, dont_use_proxy=False, country_code='US')
+      Downloads the URL, then parses it and searches for elements using given xpath.
+      :param url: input URL to download
+      :param xpath: the xpath to search in the HTML of downloaded URL, example: '//input[@name="hotel_id"]/@value'
+      :param dont_use_proxy: optional - set to True if you DONT need proxies. Default is TO USE proxies.
+      :param country_code: proxy country to download the URL from, default is US
+      :return: list of matched xpath elements. None on bad response, empty list when no elements found
+  
+  find_rows_in_csv(self, csv_filename, case_sensitive=False, **kwargs)
+      Returns raws from the CSV file matching given filtering creteria.
+      :param csv_filename: filename of the CSV from plugins directory
+      :param case_sensitive: optional, specifies whether to take case into acount on filtering, default is False 
+      :param kwargs:       filtering condition on the columns from the CSV
+      :return:             list of dictionaries - a dictionary per matched raw in the CSV file
+                           On no match None is returned
+                           For example:
+                              us_records = helpers.find_rows_in_csv('mappers.csv', proxy='US', lang='RU')
+                              print(us_records)
+                           Result: 
+                              [{ "site_name": "booking.com", "proxy" : "US", ... }]
+  
+  get_cache(self)
+      Not implemented yet
+      :return: cache object
+  
+  get_city_url_part_from_cache(self, city, country)
+      Get city url part from cache according to city and country
+      :param city: The wanted city
+      :param country: The wanted country
+      :return: Cached city url part
+  
+  get_data_file(self, csv_filename, case_sensitive)
+      Internal function. Avoid using it in plugins, use find_rows_in_csv instead.
+      :param csv_filename: the CSV filename
+      :param case_sensitive: to ignore case set to False, to take case into account, set to True
+      :return: InMemoryCsv object
+  
+  get_hotel_url_from_template(self, url_template, shop_from_scan_api)
+      Applies params on the url_template according to the checkin and checkout dates in the shop_from_scan_api.
+      Supported placeholders: inDay | inMonth | inYear | outDay | outMonth | outYear | stayLength
+      :param url_template: Url template with the placeholders, in python dict type placeholders format
+                           For example: http://myhhotel.com/"atime=%(inYear)d%(inMonth)02d%(inDay)02d
+      :param shop_from_scan_api: The dict of the current shop as it was passed to the plugin from above
+      :return: url_template instantiated with the params
+  
+  get_scan_package_name(self)
+      Not implemented yet
+      :return: Scan package name
+  
+  get_site_id_and_site_address(self, site_name)
+      Returns site_id and site_address for the given site_name. Results are taken from sites.json
+      :param site_name: the name of the site as written in sites.json of the current scan_package
+      :return: tuple with two elements - site_id and the site_address from sites.json
+  
+  get_sites_json(self)
+      Exposes sites.json from the current scan package
+      :return: sites.json of the current scan package as dict of dicts
+               For example:
+                  print(helpers.get_sites_json())
+               Result:
+                  {
+                      "booking.au": {
+                          "custom_document_hook": "custom_document_hook_2.js",
+                          "details_container_height": 10000,
+                          "navigation_results_limit": 100,
+                          "ontology_name": "Travel_OTA_booking",
+                          "site_address": "http://www.booking.com/",
+                          "site_id": 11,
+                          "site_name": "booking.au",
+                      },
+                      "booking.br": {
+                          ...
+                      },
+                      ...
+                  }
+  
+  get_url_requests_session(self, scanned_host=None, dont_use_proxy=False, country_code='US')
+      Gets session object for sending requests
+      :param scanned_host: The host you want to scan using this session - must have for PA
+      :param dont_use_proxy: False if want to use proxy for session
+      :param country_code: The country you want proxy from
+      :return: Session object
+  
+  get_url_text(self, url, dont_use_proxy=False, country_code='US')
+      Downloads the URL and returns it's TEXT
+      :param url: input URL to download
+      :param dont_use_proxy: optional - set to True if you DONT need proxies. Default is TO USE proxies.
+      :param country_code: proxy country to download the URL from, default is US
+      :return: URL's body in TEXT format if OK, None if bad response
+  
+  raise_exception(self, message)
+      Throws internal exception. As the result, the current SHOP will be skipped (the process itself will keep going) 
+      :param message: The error message to throw up
+                      For example:
+                          helpers.raise_exception("Bad proxy provided: %s" % proxy)
+  
+  select_responses_for_country(self, list_of_responses_from_api, list_of_country_name_synonyms, get_country_from_response_func)
+      Get responses from API for relevant search
+      :param list_of_responses_from_api: List of the responses got from API
+      :param list_of_country_name_synonyms: List of country names to search in responses
+      :param get_country_from_response_func: Function to extract country text from response
+      :return: List of valide responses
+  
+  set_city_url_part_to_cache(self, city, country, url_part)
+      Sets new city url part value in cache
+      :param city: The wanted city
+      :param country: The wanted country
+      :param url_part: The url part for given city and country
+  
+  logger
+      Member object with logger object. Mind it's member-object, not a function!
+      For example:
+         helpers.logger.debug('Starting working with proxy=%s', proxy)

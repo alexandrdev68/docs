@@ -130,6 +130,12 @@
                 "ieurhfieuhfiuehfiuehtgieirfieurhgiuerjfiehghwsfuihweift9483uo4hg4u5tgh43ogh495hto4u3hgoiwergpewhgfoiuwherp9u42jofh4pf4ouhtf4o8ht84hr4uthro4gh9pwrfowrhefpjrfoi4whgp49hrfow4ughpe9hfrowhgeorfewyhfgo8ewhg",
                 "hkjh*+efeorf"
             ]
+
+            var template18 = [
+                "SGD 184.00",
+                "SGD 210,00",
+                "djk455kol"
+            ]
             
       
 function parseHTML(markup) {
@@ -173,10 +179,11 @@ function parseHTML(markup) {
             var reg_template15 = new RegExp(/accounts\/([0-9]{16,16})\/block/g);
             var reg_template16 = new RegExp(/([0-9]{16,16})/g);
             var reg_template17 = new RegExp(/^[a-zA-Z0-9а-яА-ЯґҐєЄїЇіІёЁ\ \-']{2,64}$/);
+            var reg_template18 = new RegExp(/([0-9]{1,})([.,][0-9]{1,2})/g);
             
             
-            var reg = reg_template17;
-            var matches = template17;
+            var reg = reg_template18;
+            var matches = template18;
             var match_res = null;
             
             for(var index = 0; index < matches.length; index++){
